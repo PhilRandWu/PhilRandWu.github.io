@@ -21,6 +21,7 @@ export default defineConfig({
   head: [
     // 浏览器中图标害怕了
     // ["link", { rel: "icon", href: "/logo.ico" }],
+    ['meta', { name: 'description', content: '技术博客关于编程和软件开发的最新技术文章' }],
     // 添加统计代码
     ['script', {},
       `
