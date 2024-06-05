@@ -19,7 +19,7 @@ export default defineConfig({
   },
   // head设置
   head: [
-    // 浏览器中图标
+    // 浏览器中图标害怕了
     // ["link", { rel: "icon", href: "/logo.ico" }],
     // 添加统计代码
     ['script', {},
@@ -57,15 +57,15 @@ export default defineConfig({
           {
             text: '2024',
             items: [
-
+              { text: '搜索引擎搜索技巧', link: '/blog/搜索技巧优化' },
             ]
           },
-          {
-            text: '2023',
-            items: [
+          // {
+          //   text: '2023',
+          //   items: [
 
-            ]
-          },
+          //   ]
+          // },
         ]
       }
     ],
