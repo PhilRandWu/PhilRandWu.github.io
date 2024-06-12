@@ -59,6 +59,7 @@ export default defineConfig({
             text: '2024',
             items: [
               { text: '搜索引擎搜索技巧', link: '/blog/搜索技巧优化' },
+              { text: '小鹤音形', link: '/blog/小鹤音形' },
             ]
           },
           // {
