@@ -20,7 +20,7 @@ features:
   - title: Email
     details: 不妨给我发封电子邮件
     link: mailto:kim929805@gmail.com
-  - title: Twitter
-    details: 欢迎在Twitter上关注我
-    link:
+  - title: GitHub
+    details: 欢迎在 GitHub 上关注我
+    link: https://github.com/PhilRandWu
 ---
