@@ -58,7 +58,7 @@ export default defineConfig({
           {
             text: '2024',
             items: [
-              { text: '难以说出的语言', link: '/bolg/难以说明的语言' },
+              { text: '难以说出的语言', link: '/blog/难以说明的语言' },
               { text: '小鹤音形', link: '/blog/小鹤音形' },
               { text: '搜索引擎搜索技巧', link: '/blog/搜索技巧优化' },
             ]
