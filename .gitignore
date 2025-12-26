@@ -1,2 +1,9 @@
-node_modules
-docs/.vitepress/dist
+# IDE and OS files
+.idea/
+.DS_Store
+
+# VitePress cache
+.vitepress/cache/
+
+# Node modules
+node_modules/

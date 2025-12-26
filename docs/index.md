@@ -2,8 +2,8 @@
 layout: home
 
 hero:
-  name: "UENO"
-  text: "Hello World"
+  name: 'UENO'
+  text: 'Hello World'
   tagline: Learners
   image:
     # src: /logo.png

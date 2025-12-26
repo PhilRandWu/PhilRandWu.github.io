@@ -1,10 +1,43 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig } from 'vitepress';
+import { readdirSync, statSync } from 'fs';
+import { join } from 'path';
+
+interface SidebarItem {
+  text: string;
+  link?: string;
+  collapsible?: boolean;
+  items?: SidebarItem[];
+}
+
+// Function to get sidebar items from a directory, now recursive
+function getSidebarItems(dir: string, basePath: string): SidebarItem[] {
+  const dirPath = join(process.cwd(), 'docs', basePath, dir);
+  const files = readdirSync(dirPath);
+
+  return files.map((file): SidebarItem | null => {
+    const filePath = join(dirPath, file);
+    const stat = statSync(filePath);
+
+    if (stat.isDirectory()) {
+      return {
+        text: file,
+        collapsible: true,
+        items: getSidebarItems(file, join(basePath, dir))
+      };
+    } else if (file.endsWith('.md') && file !== 'index.md') {
+      const text = file.replace('.md', '');
+      const link = `/${join(basePath, dir, text)}`;
+      return { text, link };
+    }
+    return null;
+  }).filter((item): item is SidebarItem => item !== null);
+}
 
 export default defineConfig({
   // 标题（浏览器后缀）
-  title: "UENO",
+  title: 'UENO',
   // 描述
-  description: "PhilRandWu Blog",
+  description: 'PhilRandWu Blog',
   // 语言
   lang: 'zh-CN',
   // 根目录，如果需要部署成https://github.com/blog/的形式，则设置/blog/
@@ -21,10 +54,18 @@ export default defineConfig({
   head: [
     // 浏览器中图标害怕了
     // ["link", { rel: "icon", href: "/logo.ico" }],
-    ['meta', { name: 'description', content: '技术博客关于编程和软件开发的最新技术文章' }],
+    [
+      'meta',
+      {
+        name: 'description',
+        content: '技术博客关于编程和软件开发的最新技术文章',
+      },
+    ],
     ['meta', { name: 'baidu-site-verification', content: 'codeva-1MXmPEgEZE' }],
     // 添加统计代码
-    ['script', {},
+    [
+      'script',
+      {},
       `
       var _hmt = _hmt || [];
       (function() {
@@ -33,7 +74,20 @@ export default defineConfig({
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(hm, s);
       })();
-    `
+    `,
+    ],
+    // Google Analytics
+    [
+      'script',
+      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-MNW070RRTQ' }
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-MNW070RRTQ');`
     ]
   ],
   // 主题设置
@@ -43,29 +97,14 @@ export default defineConfig({
     // 首页右上角导航栏
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Blog', link: '/aboutme' }
+      { text: 'Blog', link: '/aboutme/' }
     ],
     // 文章左侧导航栏
     sidebar: [
       { text: 'AboutMe', link: '/aboutme' },
       {
         text: 'Blog',
-        items: [
-          {
-            text: '2024',
-            items: [
-              { text: '难以说出的语言', link: '/blog/难以说明的语言' },
-              { text: '小鹤音形', link: '/blog/小鹤音形' },
-              { text: '搜索引擎搜索技巧', link: '/blog/搜索技巧优化' },
-            ]
-          },
-          // {
-          //   text: '2023',
-          //   items: [
-
-          //   ]
-          // },
-        ]
+        items: getSidebarItems('', 'blog')
       }
     ],
     // 文章底部导航栏的自定义配置，默认是英语
@@ -76,7 +115,7 @@ export default defineConfig({
     // 文章右侧目录展示级别和标题
     outline: {
       level: [2, 6],
-      label: '文章目录'
+      label: '文章目录',
     },
     // 文章更新时间的前缀文本
     lastUpdatedText: '最后更新时间',
@@ -86,11 +125,14 @@ export default defineConfig({
     },
     // 右上角Github链接
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/PhilRandWu/PhilRandWu.github.io' }
+      {
+        icon: 'github',
+        link: 'https://github.com/PhilRandWu/PhilRandWu.github.io',
+      },
     ],
     // 页脚
     footer: {
       copyright: 'Copyright © 2024-present PhilRandWu',
-    }
-  }
+    },
+  },
 })
